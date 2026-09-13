@@ -437,6 +437,7 @@ a { color: inherit; text-decoration: none; }
   max-height: 76svh;
   object-fit: contain;
   border-radius: 0;
+  touch-action: pan-y;
 }
 .lightbox__figure figcaption {
   margin-top: 16px;

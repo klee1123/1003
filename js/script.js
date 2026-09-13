@@ -147,14 +147,33 @@
     $("#lightboxNext").addEventListener("click", () => moveLightbox(1));
 
     let touchStartX = null;
+    let touchStartY = null;
+
     $("#lightbox").addEventListener("touchstart", (event) => {
-      touchStartX = event.changedTouches[0].clientX;
+      if (event.touches.length !== 1) {
+        touchStartX = null;
+        touchStartY = null;
+        return;
+      }
+
+      const touch = event.changedTouches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
     }, { passive: true });
+
     $("#lightbox").addEventListener("touchend", (event) => {
-      if (touchStartX === null) return;
-      const diff = event.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(diff) > 45) moveLightbox(diff > 0 ? -1 : 1);
+      if (touchStartX === null || touchStartY === null) return;
+
+      const touch = event.changedTouches[0];
+      const diffX = touch.clientX - touchStartX;
+      const diffY = touch.clientY - touchStartY;
+
+      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+        moveLightbox(diffX > 0 ? -1 : 1);
+      }
+
       touchStartX = null;
+      touchStartY = null;
     }, { passive: true });
 
     document.addEventListener("keydown", (event) => {
