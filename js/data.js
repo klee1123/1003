@@ -47,18 +47,21 @@ window.WEDDING_DATA = {
   images: {
     hero: "./assets/images/IMG_2190.png",
     gallery: [
-      "./assets/images/gallery/IMG_2734.png",
-      "./assets/images/gallery/02.svg",
-      "./assets/images/gallery/03.svg",
-      "./assets/images/gallery/04.svg",
-      "./assets/images/gallery/05.svg",
-      "./assets/images/gallery/06.svg",
-      "./assets/images/gallery/07.svg",
-      "./assets/images/gallery/08.svg",
-      "./assets/images/gallery/09.svg",
-      "./assets/images/gallery/10.svg",
-      "./assets/images/gallery/11.svg",
-      "./assets/images/gallery/12.svg"
+      "./assets/images/gallery/01.png",
+      "./assets/images/gallery/02.png",
+      "./assets/images/gallery/03.png",
+      "./assets/images/gallery/04.png",
+      "./assets/images/gallery/05.png",
+      "./assets/images/gallery/06.png",
+      "./assets/images/gallery/07.png",
+      "./assets/images/gallery/08.png",
+      "./assets/images/gallery/09.png",
+      "./assets/images/gallery/10.png",
+      "./assets/images/gallery/11.png",
+      "./assets/images/gallery/12.png",
+      "./assets/images/gallery/13.png",
+      "./assets/images/gallery/14.png",
+      "./assets/images/gallery/15.png"
     ]
   }
 };
