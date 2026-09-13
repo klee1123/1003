@@ -15,7 +15,7 @@
 <body>
   <main class="invitation" id="top">
     <section class="hero" aria-labelledby="hero-title">
-      <img class="hero__image" id="heroImage" src="./assets/images/hero.svg" alt="신랑 신부 웨딩 사진" />
+      <img class="hero__image" id="heroImage" src="./assets/images/hero.svg" alt="신랑 신부 웨딩 사진" draggable="false" />
       <div class="hero__shade"></div>
 
       <div class="hero__top">
@@ -127,12 +127,14 @@
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox__viewport">
       <button class="lightbox__close" id="lightboxClose" type="button" aria-label="사진 닫기">×</button>
-      <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" type="button" aria-label="이전 사진">‹</button>
       <figure class="lightbox__figure">
-        <img id="lightboxImage" src="" alt="" />
+        <div class="lightbox__media">
+          <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" type="button" aria-label="이전 사진">‹</button>
+          <img id="lightboxImage" src="" alt="" draggable="false" />
+          <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" type="button" aria-label="다음 사진">›</button>
+        </div>
         <figcaption id="lightboxCounter">1 / 1</figcaption>
       </figure>
-      <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" type="button" aria-label="다음 사진">›</button>
     </div>
   </div>
 

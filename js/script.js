@@ -53,7 +53,7 @@
     $("#outroMessage").innerHTML = data.copy.outro;
     $("#outroNames").textContent = `${groom.displayName} · ${bride.displayName}`;
 
-    document.title = `${groom.name} ♥ ${bride.name} 결혼합니다.`;
+    document.title = `${groom.name} ✦ ${bride.name}, 결혼합니다`;
   };
 
   const renderCalendar = () => {
@@ -99,7 +99,7 @@
 
   const galleryItem = (src, index) => `
     <button class="gallery-photo" type="button" data-gallery-index="${index}" aria-label="${index + 1}번째 사진 크게 보기">
-      <img src="${src}" alt="웨딩 갤러리 사진 ${index + 1}" loading="lazy" />
+      <img src="${src}" alt="웨딩 갤러리 사진 ${index + 1}" loading="lazy" draggable="false" />
     </button>
   `;
 
@@ -137,13 +137,13 @@
 
   const bindGalleryEvents = () => {
     document.addEventListener("contextmenu", (event) => {
-      if (event.target.closest("img")) {
+      if (event.target instanceof Element && event.target.closest("img, .gallery-photo, .lightbox__media")) {
         event.preventDefault();
       }
     }, { passive: false });
 
     document.addEventListener("dragstart", (event) => {
-      if (event.target.closest("img")) {
+      if (event.target instanceof Element && event.target.closest("img, .gallery-photo, .lightbox__media")) {
         event.preventDefault();
       }
     });
@@ -158,55 +158,43 @@
     $("#lightboxPrev").addEventListener("click", () => moveLightbox(-1));
     $("#lightboxNext").addEventListener("click", () => moveLightbox(1));
 
-    let touchStartX = null;
-    let touchStartY = null;
-    let isZoomed = false;
+    const lightbox = $("#lightbox");
+    let swipeStart = null;
+    const isPageZoomed = () => (window.visualViewport?.scale ?? 1) > 1.01;
+    const cancelSwipe = () => { swipeStart = null; };
 
-    const image = $("#lightboxImage");
-
-    image.addEventListener("gesturestart", (event) => {
-      event.preventDefault();
-      isZoomed = true;
-    }, { passive: false });
-
-    image.addEventListener("gesturechange", (event) => {
-      event.preventDefault();
-      isZoomed = true;
-    }, { passive: false });
-
-    image.addEventListener("gestureend", () => {
-      isZoomed = false;
-    });
-
-    $("#lightbox").addEventListener("touchstart", (event) => {
-      if (event.touches.length !== 1) {
-        touchStartX = null;
-        touchStartY = null;
-        isZoomed = true;
+    // 확대는 브라우저에 맡기고, 기본 배율의 한 손가락 동작만 사진 넘기기로 처리합니다.
+    lightbox.addEventListener("touchstart", (event) => {
+      if (event.touches.length !== 1 || isPageZoomed() || event.target.closest("button")) {
+        cancelSwipe();
         return;
       }
 
-      const touch = event.changedTouches[0];
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-      isZoomed = false;
+      const touch = event.touches[0];
+      swipeStart = { id: touch.identifier, x: touch.clientX, y: touch.clientY };
     }, { passive: true });
 
-    $("#lightbox").addEventListener("touchend", (event) => {
-      if (touchStartX === null || touchStartY === null) return;
+    lightbox.addEventListener("touchmove", (event) => {
+      if (event.touches.length !== 1 || isPageZoomed()) cancelSwipe();
+    }, { passive: true });
 
-      const touch = event.changedTouches[0];
-      const diffX = touch.clientX - touchStartX;
-      const diffY = touch.clientY - touchStartY;
+    lightbox.addEventListener("touchend", (event) => {
+      const start = swipeStart;
+      cancelSwipe();
+      if (!start || event.touches.length !== 0 || isPageZoomed() || !lightbox.classList.contains("is-open")) return;
 
-      if (!isZoomed && Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+      const touch = Array.from(event.changedTouches).find((item) => item.identifier === start.id);
+      if (!touch) return;
+      const diffX = touch.clientX - start.x;
+      const diffY = touch.clientY - start.y;
+
+      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
         moveLightbox(diffX > 0 ? -1 : 1);
       }
-
-      touchStartX = null;
-      touchStartY = null;
-      isZoomed = false;
     }, { passive: true });
+
+    lightbox.addEventListener("touchcancel", cancelSwipe, { passive: true });
+    window.visualViewport?.addEventListener("resize", cancelSwipe);
 
     document.addEventListener("keydown", (event) => {
       if (!$("#lightbox").classList.contains("is-open")) return;
