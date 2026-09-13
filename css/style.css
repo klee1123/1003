@@ -123,13 +123,12 @@ a { color: inherit; text-decoration: none; }
   font-size: 24px;
   letter-spacing: .07em;
 }
-.hero__detail, .hero__venue {
+.hero__detail {
   margin: 15px 0 0;
   font-size: 12px;
   line-height: 1.9;
   letter-spacing: .03em;
 }
-.hero__venue { margin-top: 1px; opacity: .92; }
 .hero__daymark {
   margin: 20px 0 0;
   font-family: var(--serif-en);
@@ -242,12 +241,6 @@ a { color: inherit; text-decoration: none; }
   border-radius: 50%;
   background: var(--accent);
   z-index: -1;
-}
-.calendar__day small {
-  margin-top: -1px;
-  font-size: 7px;
-  letter-spacing: .02em;
-  color: rgba(255,255,255,.85);
 }
 .d-day {
   margin-top: 64px;

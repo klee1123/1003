@@ -7,14 +7,7 @@
 
   const parseWeddingDate = () => {
     const [year, month, day] = data.wedding.date.split("-").map(Number);
-    const [hour, minute] = data.wedding.time.split(":").map(Number);
-    return new Date(year, month - 1, day, hour, minute, 0, 0);
-  };
-
-  const formatKoreanTime = (hour, minute) => {
-    const period = hour < 12 ? "오전" : "오후";
-    const normalizedHour = hour % 12 || 12;
-    return `${period} ${normalizedHour}시${minute ? ` ${minute}분` : ""}`;
+    return new Date(year, month - 1, day);
   };
 
   const renderText = () => {
@@ -31,8 +24,7 @@
     $("#brideEnglish").textContent = bride.english;
     $("#heroWeekday").textContent = weekdaysEn[weddingDate.getDay()];
     $("#heroDateEnglish").textContent = `${monthsEn[weddingDate.getMonth()]} ${String(weddingDate.getDate()).padStart(2, "0")} ${weddingDate.getFullYear()}`;
-    $("#heroDateKorean").textContent = `${weddingDate.getFullYear()}년 ${weddingDate.getMonth() + 1}월 ${weddingDate.getDate()}일 ${weekdaysKo[weddingDate.getDay()]}요일 ${formatKoreanTime(weddingDate.getHours(), weddingDate.getMinutes())}`;
-    $("#heroVenue").textContent = data.wedding.venue;
+    $("#heroDateKorean").textContent = `${weddingDate.getFullYear()}년 ${weddingDate.getMonth() + 1}월 ${weddingDate.getDate()}일 ${weekdaysKo[weddingDate.getDay()]}요일`;
     $("#heroDaymark").textContent = `${String(weddingDate.getMonth() + 1).padStart(2, "0")}.${String(weddingDate.getDate()).padStart(2, "0")}`;
 
     $("#invitationMessage").innerHTML = data.copy.invitation.map((line) => `<p>${line}</p>`).join("");
@@ -47,9 +39,9 @@
     $("#brideFullName").textContent = bride.name;
 
     $("#calendar-title").textContent = `${weddingDate.getMonth() + 1}월의 ${weddingDate.getDate()}번째 날.`;
-    $("#calendarTimeText").textContent = `${weddingDate.getFullYear()}. ${String(weddingDate.getMonth() + 1).padStart(2, "0")}. ${String(weddingDate.getDate()).padStart(2, "0")} · ${weekdaysEn[weddingDate.getDay()].slice(0, 3)} · ${weddingDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })}`;
+    $("#calendarTimeText").textContent = `${weddingDate.getFullYear()}. ${String(weddingDate.getMonth() + 1).padStart(2, "0")}. ${String(weddingDate.getDate()).padStart(2, "0")} · ${weekdaysEn[weddingDate.getDay()].slice(0, 3)}`;
     $("#dDayNames").textContent = `${groom.displayName} ${bride.displayName}`;
-    $("#dDayDate").textContent = `${weddingDate.getFullYear()}.${String(weddingDate.getMonth() + 1).padStart(2, "0")}.${String(weddingDate.getDate()).padStart(2, "0")} ${weekdaysEn[weddingDate.getDay()].slice(0, 3)} ${data.wedding.time}`;
+    $("#dDayDate").textContent = `${weddingDate.getFullYear()}.${String(weddingDate.getMonth() + 1).padStart(2, "0")}.${String(weddingDate.getDate()).padStart(2, "0")} ${weekdaysEn[weddingDate.getDay()].slice(0, 3)}`;
     $("#outroMessage").innerHTML = data.copy.outro;
     $("#outroNames").textContent = `${groom.displayName} · ${bride.displayName}`;
 
@@ -74,7 +66,6 @@
       cells.push(`
         <span class="calendar__day${weekendClass}${isWedding ? " calendar__day--wedding" : ""}">
           <span>${day}</span>
-          ${isWedding ? `<small>${data.wedding.time}</small>` : ""}
         </span>
       `);
     }

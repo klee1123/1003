@@ -18,9 +18,7 @@ window.WEDDING_DATA = {
     }
   },
   wedding: {
-    date: "2026-10-03",
-    time: "12:00",
-    venue: "디오디아 2.0"
+    date: "2026-10-03"
   },
   copy: {
     invitation: [
