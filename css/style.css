@@ -24,7 +24,14 @@ body {
 body.modal-open { overflow: hidden; }
 button, input, textarea { font: inherit; }
 button { color: inherit; }
-img { display: block; width: 100%; }
+img {
+  display: block;
+  width: 100%;
+  user-drag: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
 a { color: inherit; text-decoration: none; }
 
 .invitation {
@@ -437,7 +444,10 @@ a { color: inherit; text-decoration: none; }
   max-height: 76svh;
   object-fit: contain;
   border-radius: 0;
-  touch-action: pan-y;
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .lightbox__figure figcaption {
   margin-top: 16px;

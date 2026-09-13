@@ -136,6 +136,18 @@
   };
 
   const bindGalleryEvents = () => {
+    document.addEventListener("contextmenu", (event) => {
+      if (event.target.closest("img")) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+
+    document.addEventListener("dragstart", (event) => {
+      if (event.target.closest("img")) {
+        event.preventDefault();
+      }
+    });
+
     document.addEventListener("click", (event) => {
       const button = event.target.closest("[data-gallery-index]");
       if (!button) return;
@@ -148,17 +160,36 @@
 
     let touchStartX = null;
     let touchStartY = null;
+    let isZoomed = false;
+
+    const image = $("#lightboxImage");
+
+    image.addEventListener("gesturestart", (event) => {
+      event.preventDefault();
+      isZoomed = true;
+    }, { passive: false });
+
+    image.addEventListener("gesturechange", (event) => {
+      event.preventDefault();
+      isZoomed = true;
+    }, { passive: false });
+
+    image.addEventListener("gestureend", () => {
+      isZoomed = false;
+    });
 
     $("#lightbox").addEventListener("touchstart", (event) => {
       if (event.touches.length !== 1) {
         touchStartX = null;
         touchStartY = null;
+        isZoomed = true;
         return;
       }
 
       const touch = event.changedTouches[0];
       touchStartX = touch.clientX;
       touchStartY = touch.clientY;
+      isZoomed = false;
     }, { passive: true });
 
     $("#lightbox").addEventListener("touchend", (event) => {
@@ -168,12 +199,13 @@
       const diffX = touch.clientX - touchStartX;
       const diffY = touch.clientY - touchStartY;
 
-      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (!isZoomed && Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
         moveLightbox(diffX > 0 ? -1 : 1);
       }
 
       touchStartX = null;
       touchStartY = null;
+      isZoomed = false;
     }, { passive: true });
 
     document.addEventListener("keydown", (event) => {
