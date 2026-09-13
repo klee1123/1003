@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f2ec" />
+  <meta name="description" content="모바일 청첩장" />
+  <title>Wedding Invitation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <main class="invitation" id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero__image" id="heroImage" src="./assets/images/hero.svg" alt="신랑 신부 웨딩 사진" />
+      <div class="hero__shade"></div>
+
+      <div class="hero__top">
+        <div class="hero__names" id="hero-title">
+          <span id="groomName">이우빈</span>
+          <span class="hero__and">and</span>
+          <span id="brideName">이경진</span>
+        </div>
+        <div class="hero__english">
+          <span id="groomEnglish">WOOBIN</span>
+          <span id="brideEnglish">KYUNGJIN</span>
+        </div>
+      </div>
+
+      <div class="hero__bottom">
+        <p class="hero__weekday" id="heroWeekday">SATURDAY</p>
+        <p class="hero__date" id="heroDateEnglish">OCT 10 2026</p>
+        <p class="hero__detail" id="heroDateKorean">2026년 10월 10일 토요일 오후 1시 30분</p>
+        <p class="hero__venue" id="heroVenue">더살롱드웨딩홀 1층 레터홀</p>
+        <p class="hero__daymark" id="heroDaymark">10.10</p>
+      </div>
+
+      <a class="scroll-cue" href="#invitation" aria-label="초대글로 이동">
+        <span>SCROLL</span>
+        <span class="scroll-cue__line"></span>
+      </a>
+    </section>
+
+    <section class="section invitation-copy reveal" id="invitation">
+      <p class="eyebrow">INVITATION</p>
+      <h2 class="section-title">소중한 분들을 초대합니다.</h2>
+      <div class="copy" id="invitationMessage">
+        <p>오늘도, 내일도 함께하고 싶은 사람이 생겼습니다.</p>
+        <p>서로의 하루를 아끼며 같은 방향을 바라보고<br />평생을 함께 걸어가려 합니다.</p>
+        <p>저희 두 사람의 새로운 시작에 함께하시어<br />따뜻한 축복을 나누어 주시면 감사하겠습니다.</p>
+      </div>
+    </section>
+
+    <section class="section family reveal" aria-labelledby="family-title">
+      <p class="eyebrow">FAMILY</p>
+      <h2 class="section-title" id="family-title">두 사람의 이름으로 인사드립니다.</h2>
+
+      <div class="family__rows">
+        <div class="family__row">
+          <p class="family__parents"><span id="groomFather">이성주</span> · <span id="groomMother">고인숙</span></p>
+          <p class="family__relation">의 <span id="groomRelation">장남</span></p>
+          <p class="family__person" id="groomFullName">이우빈</p>
+        </div>
+        <div class="family__divider"></div>
+        <div class="family__row">
+          <p class="family__parents"><span id="brideFather">이재선</span> · <span id="brideMother">김전미</span></p>
+          <p class="family__relation">의 <span id="brideRelation">장녀</span></p>
+          <p class="family__person" id="brideFullName">이경진</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section calendar-section reveal" aria-labelledby="calendar-title">
+      <p class="eyebrow">WEDDING DAY</p>
+      <h2 class="calendar-title" id="calendar-title">시월의 열 번째 날.</h2>
+      <p class="calendar-sub" id="calendarTimeText">2026. 10. 10 · SAT · 1:30 PM</p>
+
+      <div class="calendar" aria-label="결혼식 달력">
+        <div class="calendar__weekdays" aria-hidden="true">
+          <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+        </div>
+        <div class="calendar__days" id="calendarDays"></div>
+      </div>
+
+      <div class="d-day" aria-live="polite">
+        <p class="d-day__caption"><span id="dDayNames">우빈 경진</span> 결혼식까지</p>
+        <p class="d-day__number" id="dDayNumber">D-</p>
+        <p class="d-day__date" id="dDayDate">2026.10.10 SAT 13:30</p>
+      </div>
+    </section>
+
+    <section class="section gallery-section reveal" aria-labelledby="gallery-title">
+      <div class="gallery-head">
+        <div>
+          <p class="eyebrow">GALLERY</p>
+          <h2 class="section-title" id="gallery-title">우리의 순간</h2>
+        </div>
+        <p class="gallery-count" id="galleryCount" aria-label="갤러리 사진 수"></p>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid" aria-label="웨딩 사진 갤러리"></div>
+    </section>
+
+    <section class="section accounts-section reveal" id="accounts" aria-labelledby="accounts-title">
+      <p class="eyebrow">WITH GRATITUDE</p>
+      <h2 class="section-title" id="accounts-title">마음 전하는 곳</h2>
+      <div class="copy accounts-copy">
+        <p>멀리서도 저희의 시작을 축복해 주시는<br />분들을 위해 계좌번호를 안내드립니다.</p>
+        <p>보내주시는 따뜻한 마음에 감사드리며,<br />소중히 간직하고 행복하게 살겠습니다.</p>
+      </div>
+      <div class="accounts-groups" id="accountGroups"></div>
+      <p class="accounts-status" id="accountStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+    </section>
+
+    <section class="outro reveal" aria-labelledby="outro-title">
+      <p class="outro__small">THANK YOU</p>
+      <h2 id="outro-title">함께해 주셔서 감사합니다.</h2>
+      <p class="outro__message" id="outroMessage">저희의 새로운 시작을 따뜻한 마음으로 축복해 주셔서 감사합니다.<br />보내주신 마음 오래도록 간직하며 행복하게 잘 살겠습니다.</p>
+      <p class="outro__names" id="outroNames">우빈 · 경진</p>
+      <a class="outro__top" href="#top">BACK TO TOP</a>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__close" id="lightboxClose" type="button" aria-label="사진 닫기">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" type="button" aria-label="이전 사진">‹</button>
+    <figure class="lightbox__figure">
+      <img id="lightboxImage" src="" alt="" />
+      <figcaption id="lightboxCounter">1 / 1</figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" type="button" aria-label="다음 사진">›</button>
+  </div>
+
+  <script src="./js/data.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+</html>
