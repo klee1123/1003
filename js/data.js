@@ -45,7 +45,7 @@ window.WEDDING_DATA = {
     ]
   },
   images: {
-    hero: "./assets/images/IMG_2190.png",
+    hero: "./assets/images/main.png",
     gallery: [
       "./assets/images/gallery/01.png",
       "./assets/images/gallery/02.png",
