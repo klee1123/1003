@@ -5,6 +5,23 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
+  const setupHeroSize = () => {
+    const hero = $(".hero");
+    const touchViewport = window.matchMedia("(pointer: coarse)");
+    let viewportWidth = 0;
+
+    const updateSize = () => {
+      const width = document.documentElement.clientWidth;
+      // In-app toolbars can resize even svh. Keep the initial mobile crop until rotation/width changes.
+      if (width === viewportWidth && touchViewport.matches) return;
+      viewportWidth = width;
+      hero.style.height = `${window.innerHeight}px`;
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+  };
+
   const parseWeddingDate = () => {
     const [year, month, day] = data.wedding.date.split("-").map(Number);
     return new Date(year, month - 1, day);
@@ -284,6 +301,9 @@
   const setupContacts = () => {
     const sheet = $("#contactSheet");
     const trigger = $("#contactOpen");
+    const backdrop = $("#contactBackdrop");
+    const title = $("#contactTitle");
+    const invitation = $(".invitation");
     const groups = $("#contactGroups");
     let hasMissingNumber = false;
 
@@ -339,19 +359,92 @@
     $("#contactNotice").hidden = !hasMissingNumber;
 
     let scrollPosition = { x: 0, y: 0 };
+    let isOpen = false;
+    let useFallback = false;
+    let previousAriaHidden = null;
+    let previousInert = false;
+
+    const restorePage = () => {
+      if (!isOpen) return;
+      isOpen = false;
+      backdrop.hidden = true;
+      if (useFallback) {
+        if (previousAriaHidden === null) invitation.removeAttribute("aria-hidden");
+        else invitation.setAttribute("aria-hidden", previousAriaHidden);
+        if (!previousInert) invitation.removeAttribute("inert");
+      }
+      document.body.classList.remove("contact-open");
+      document.body.style.removeProperty("--contact-scroll-top");
+      // Older WebViews may not accept the scrollTo options object.
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo(scrollPosition.x, scrollPosition.y);
+      trigger.focus({ preventScroll: true });
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+    };
+
+    const closeContacts = () => {
+      if (!isOpen) return;
+      if (useFallback) {
+        sheet.removeAttribute("open");
+        restorePage();
+      } else {
+        sheet.close();
+      }
+    };
+
     trigger.addEventListener("click", () => {
-      if (sheet.open) return;
+      if (isOpen) return;
       scrollPosition = { x: window.scrollX, y: window.scrollY };
       document.body.style.setProperty("--contact-scroll-top", `-${scrollPosition.y}px`);
       document.body.classList.add("contact-open");
-      sheet.showModal();
+      isOpen = true;
+      useFallback = true;
+      if (typeof sheet.showModal === "function" && typeof sheet.close === "function") {
+        try {
+          sheet.showModal();
+          useFallback = !sheet.hasAttribute("open");
+        } catch {
+          // Keep contacts usable when the embedded browser cannot show a native dialog.
+        }
+      }
+      if (useFallback) {
+        sheet.setAttribute("open", "");
+        backdrop.hidden = false;
+        previousAriaHidden = invitation.getAttribute("aria-hidden");
+        previousInert = invitation.hasAttribute("inert");
+        title.focus({ preventScroll: true });
+        invitation.setAttribute("aria-hidden", "true");
+        invitation.setAttribute("inert", "");
+      } else {
+        title.focus({ preventScroll: true });
+      }
     });
-    $("#contactClose").addEventListener("click", () => sheet.close());
-    sheet.addEventListener("close", () => {
-      document.body.classList.remove("contact-open");
-      document.body.style.removeProperty("--contact-scroll-top");
-      window.scrollTo({ left: scrollPosition.x, top: scrollPosition.y, behavior: "instant" });
-      trigger.focus({ preventScroll: true });
+    $("#contactClose").addEventListener("click", closeContacts);
+    backdrop.addEventListener("click", closeContacts);
+    sheet.addEventListener("close", restorePage);
+
+    document.addEventListener("keydown", (event) => {
+      if (!isOpen || !useFallback) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeContacts();
+      } else if (event.key === "Tab") {
+        const controls = $$("button:not([disabled]), a[href]", sheet);
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        const active = document.activeElement;
+        if (event.shiftKey && (active === first || !controls.includes(active))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (active === last || !controls.includes(active))) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+    document.addEventListener("focusin", (event) => {
+      if (isOpen && useFallback && !sheet.contains(event.target)) title.focus({ preventScroll: true });
     });
 
     const isOutsideSheet = (event) => {
@@ -361,7 +454,7 @@
     let startedOutside = false;
     sheet.addEventListener("pointerdown", (event) => { startedOutside = event.target === sheet && isOutsideSheet(event); });
     sheet.addEventListener("click", (event) => {
-      if (startedOutside && event.target === sheet && isOutsideSheet(event)) sheet.close();
+      if (startedOutside && event.target === sheet && isOutsideSheet(event)) closeContacts();
       startedOutside = false;
     });
   };
@@ -383,6 +476,7 @@
     $$(".reveal").forEach((el) => observer.observe(el));
   };
 
+  setupHeroSize();
   renderText();
   renderCalendar();
   renderDDay();

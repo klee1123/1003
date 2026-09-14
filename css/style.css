@@ -29,7 +29,15 @@ body.contact-open {
   overflow: hidden;
 }
 button, input, textarea { font: inherit; }
-button { color: inherit; }
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  background-image: none;
+  box-shadow: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
 img {
   display: block;
   width: 100%;
@@ -57,6 +65,7 @@ a { color: inherit; text-decoration: none; }
 
 .hero {
   position: relative;
+  height: 100vh;
   height: 100svh;
   min-height: 680px;
   max-height: 940px;
@@ -218,11 +227,26 @@ a { color: inherit; text-decoration: none; }
 .family__contact:hover { text-decoration-color: currentColor; }
 .family__contact:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-.contact-sheet {
+.contact-backdrop {
   position: fixed;
-  inset: auto 0 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 200;
+  background: rgba(47, 43, 39, .46);
+}
+.contact-sheet {
+  display: none;
+  position: fixed;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 201;
   width: 100%;
   max-width: var(--max-width);
+  max-height: calc(100vh - 24px);
   max-height: calc(100svh - 24px);
   max-height: calc(100dvh - 24px);
   margin: 0 auto;
@@ -234,7 +258,7 @@ a { color: inherit; text-decoration: none; }
   background: var(--paper);
   color: var(--ink);
 }
-.contact-sheet[open] { animation: contact-sheet-in .28s ease-out; }
+.contact-sheet[open] { display: block; animation: contact-sheet-in .28s ease-out; }
 .contact-sheet::backdrop { background: rgba(47, 43, 39, .46); }
 @keyframes contact-sheet-in {
   from { transform: translateY(100%); }
@@ -249,6 +273,7 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
 }
 .contact-sheet__header h2 { margin: 0; font-size: 17px; font-weight: 400; line-height: 1.8; }
+.contact-sheet__header h2:focus { outline: none; }
 .contact-sheet__close {
   position: absolute;
   top: 20px;
@@ -264,7 +289,7 @@ a { color: inherit; text-decoration: none; }
   line-height: 1;
   cursor: pointer;
 }
-.contact-sheet__body { padding: 0 28px calc(30px + env(safe-area-inset-bottom)); }
+.contact-sheet__body { padding: 0 28px 30px; padding-bottom: calc(30px + env(safe-area-inset-bottom)); }
 .contact-group + .contact-group {
   margin-top: 16px;
   padding-top: 28px;

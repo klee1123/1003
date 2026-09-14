@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/style.css?v=20260914-hero-1" />
 </head>
 <body>
   <main class="invitation" id="top">
@@ -133,10 +133,11 @@
     </section>
   </main>
 
-  <dialog class="contact-sheet" id="contactSheet" aria-labelledby="contactTitle">
+  <div class="contact-backdrop" id="contactBackdrop" hidden></div>
+  <dialog class="contact-sheet" id="contactSheet" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
     <header class="contact-sheet__header">
-      <h2 id="contactTitle">혼주에게 연락하기</h2>
-      <button class="contact-sheet__close" id="contactClose" type="button" aria-label="연락처 닫기" autofocus>×</button>
+      <h2 id="contactTitle" tabindex="-1" autofocus>혼주에게 연락하기</h2>
+      <button class="contact-sheet__close" id="contactClose" type="button" aria-label="연락처 닫기">×</button>
     </header>
     <div class="contact-sheet__body">
       <div id="contactGroups"></div>
@@ -158,7 +159,7 @@
     </div>
   </div>
 
-  <script src="./js/data.js"></script>
-  <script src="./js/script.js"></script>
+  <script src="./js/data.js?v=20260914-hero-1"></script>
+  <script src="./js/script.js?v=20260914-hero-1"></script>
 </body>
 </html>
