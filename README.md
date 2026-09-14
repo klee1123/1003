@@ -24,6 +24,14 @@ FAMILY 아래의 링크를 누르면 양가 혼주 연락처가 하단 모달로
 
 ## 마음 전하는 곳
 
+‘마음 전하는 곳’ 전체(축의금 안내, 계좌정보, 답례품 안내·링크)는 기본으로 표시합니다. 접속 주소에 `?mode=simple`이 있을 때만 숨깁니다.
+
+- 기본 안내 표시: `https://klee1123.github.io/1003/`
+- 안내 숨김: `https://klee1123.github.io/1003/?mode=simple`
+- 다른 파라미터와 함께 사용: `https://klee1123.github.io/1003/?v=20260914&mode=simple`
+
+`mode`가 없거나 `simple` 이외의 값이면 표시합니다. `gift` 파라미터는 사용하지 않습니다.
+
 `js/data.js`의 `accounts.groom`(신랑 측), `accounts.bride`(신부 측)에 계좌정보를 입력합니다.
 
 - `label`: 관계 (신랑, 신부, 아버지, 어머니 등)

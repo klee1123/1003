@@ -435,6 +435,7 @@ a { color: inherit; text-decoration: none; }
 .gallery-photo:active img { transform: scale(.97); opacity: .88; }
 
 .accounts-section { background: #f1ece5; }
+.hide-gift .accounts-section { display: none; }
 .accounts-copy { margin-top: 30px; }
 .accounts-copy p { margin-bottom: 16px; }
 .accounts-groups { margin-top: 38px; text-align: left; }
@@ -529,7 +530,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: #2e2a26;
+  background: #35312d;
   color: #f4efe9;
 }
 .outro__small {

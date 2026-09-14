@@ -238,6 +238,10 @@
   };
 
   const renderAccounts = () => {
+    if (document.documentElement.classList.contains("hide-gift")) {
+      $("#accounts").remove();
+      return;
+    }
     const groups = $("#accountGroups");
     const status = $("#accountStatus");
     let statusTimer;
