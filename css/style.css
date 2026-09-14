@@ -22,6 +22,12 @@ body {
   word-break: keep-all;
 }
 body.modal-open { overflow: hidden; }
+body.contact-open {
+  position: fixed;
+  top: var(--contact-scroll-top);
+  width: 100%;
+  overflow: hidden;
+}
 button, input, textarea { font: inherit; }
 button { color: inherit; }
 img {
@@ -194,6 +200,108 @@ a { color: inherit; text-decoration: none; }
 .family__relation { margin-top: 4px; font-size: 11px; color: var(--muted); }
 .family__person { margin-top: 12px; font-size: 21px; font-weight: 500; letter-spacing: .16em; }
 .family__divider { width: 36px; height: 1px; margin: 34px auto; background: var(--line); }
+.family__contact {
+  min-height: 44px;
+  margin-top: 38px;
+  padding: 10px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1.8;
+  text-decoration: underline;
+  text-decoration-color: rgba(127, 92, 77, .36);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+  cursor: pointer;
+}
+.family__contact:hover { text-decoration-color: currentColor; }
+.family__contact:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.contact-sheet {
+  position: fixed;
+  inset: auto 0 0;
+  width: 100%;
+  max-width: var(--max-width);
+  max-height: calc(100svh - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 14px 14px 0 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--paper);
+  color: var(--ink);
+}
+.contact-sheet[open] { animation: contact-sheet-in .28s ease-out; }
+.contact-sheet::backdrop { background: rgba(47, 43, 39, .46); }
+@keyframes contact-sheet-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.contact-sheet__header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 32px 56px 26px;
+  background: var(--paper);
+  text-align: center;
+}
+.contact-sheet__header h2 { margin: 0; font-size: 17px; font-weight: 400; line-height: 1.8; }
+.contact-sheet__close {
+  position: absolute;
+  top: 20px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--serif-en);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+.contact-sheet__body { padding: 0 28px calc(30px + env(safe-area-inset-bottom)); }
+.contact-group + .contact-group {
+  margin-top: 16px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.contact-group__title {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .06em;
+}
+.contact-list { margin: 0; padding: 0; list-style: none; }
+.contact-row { display: flex; align-items: center; gap: 12px; padding: 17px 0; }
+.contact-row__info { flex: 1; min-width: 0; }
+.contact-row__relation { margin: 0; font-size: 11px; color: var(--muted); }
+.contact-row__name { margin: 5px 0 0; font-size: 14px; font-weight: 400; letter-spacing: .06em; overflow-wrap: anywhere; }
+.contact-row__actions { display: flex; gap: 8px; flex-shrink: 0; }
+.contact-row__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  text-decoration: underline;
+  text-decoration-color: rgba(127, 92, 77, .36);
+  text-underline-offset: 6px;
+}
+.contact-row__action:hover { text-decoration-color: currentColor; }
+.contact-row__action:disabled { color: var(--muted); opacity: .55; text-decoration: none; }
+.contact-sheet__close:focus-visible, .contact-row__action:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.contact-sheet__notice { margin: 18px 0 0; color: var(--muted); font-size: 11px; line-height: 1.8; text-align: center; }
 
 .calendar-section { background: #faf8f4; padding-bottom: 112px; }
 .calendar-title { margin: 0; font-size: 21px; font-weight: 400; letter-spacing: .02em; }

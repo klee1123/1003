@@ -281,6 +281,91 @@
     });
   };
 
+  const setupContacts = () => {
+    const sheet = $("#contactSheet");
+    const trigger = $("#contactOpen");
+    const groups = $("#contactGroups");
+    let hasMissingNumber = false;
+
+    const textElement = (tag, className, text) => {
+      const element = document.createElement(tag);
+      element.className = className;
+      element.textContent = text;
+      return element;
+    };
+
+    [["groom", "신랑 측"], ["bride", "신부 측"]].forEach(([side, title]) => {
+      const group = document.createElement("section");
+      group.className = "contact-group";
+      const heading = textElement("h3", "contact-group__title", title);
+      heading.id = `contact-${side}-title`;
+      group.setAttribute("aria-labelledby", heading.id);
+      const list = document.createElement("ul");
+      list.className = "contact-list";
+
+      [["father", "아버지"], ["mother", "어머니"]].forEach(([relation, label]) => {
+        const name = data.couple[side][relation];
+        const rawNumber = data.contacts?.[side]?.[relation];
+        const number = typeof rawNumber === "string" ? rawNumber.replace(/[\s()-]/g, "") : "";
+        const hasNumber = /^\+?\d{8,15}$/.test(number);
+        if (!hasNumber) hasMissingNumber = true;
+
+        const row = document.createElement("li");
+        row.className = "contact-row";
+        const info = document.createElement("div");
+        info.className = "contact-row__info";
+        info.append(
+          textElement("p", "contact-row__relation", label),
+          textElement("p", "contact-row__name", name)
+        );
+        const actions = document.createElement("div");
+        actions.className = "contact-row__actions";
+        [["tel", "전화"], ["sms", "문자"]].forEach(([scheme, action]) => {
+          const link = textElement(hasNumber ? "a" : "button", "contact-row__action", action);
+          link.setAttribute("aria-label", `${title} ${label} ${name} 님께 ${action}${hasNumber ? "하기" : " (연락처 준비 중)"}`);
+          if (hasNumber) link.href = `${scheme}:${number}`;
+          else {
+            link.type = "button";
+            link.disabled = true;
+          }
+          actions.append(link);
+        });
+        row.append(info, actions);
+        list.append(row);
+      });
+      group.append(heading, list);
+      groups.append(group);
+    });
+    $("#contactNotice").hidden = !hasMissingNumber;
+
+    let scrollPosition = { x: 0, y: 0 };
+    trigger.addEventListener("click", () => {
+      if (sheet.open) return;
+      scrollPosition = { x: window.scrollX, y: window.scrollY };
+      document.body.style.setProperty("--contact-scroll-top", `-${scrollPosition.y}px`);
+      document.body.classList.add("contact-open");
+      sheet.showModal();
+    });
+    $("#contactClose").addEventListener("click", () => sheet.close());
+    sheet.addEventListener("close", () => {
+      document.body.classList.remove("contact-open");
+      document.body.style.removeProperty("--contact-scroll-top");
+      window.scrollTo({ left: scrollPosition.x, top: scrollPosition.y, behavior: "instant" });
+      trigger.focus({ preventScroll: true });
+    });
+
+    const isOutsideSheet = (event) => {
+      const bounds = sheet.getBoundingClientRect();
+      return event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+    };
+    let startedOutside = false;
+    sheet.addEventListener("pointerdown", (event) => { startedOutside = event.target === sheet && isOutsideSheet(event); });
+    sheet.addEventListener("click", (event) => {
+      if (startedOutside && event.target === sheet && isOutsideSheet(event)) sheet.close();
+      startedOutside = false;
+    });
+  };
+
   const bindReveal = () => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion || !("IntersectionObserver" in window)) {
@@ -303,6 +388,7 @@
   renderDDay();
   renderGallery();
   renderAccounts();
+  setupContacts();
   bindGalleryEvents();
   bindReveal();
 })();

@@ -71,6 +71,7 @@
           <p class="family__person" id="brideFullName">이경진</p>
         </div>
       </div>
+      <button class="family__contact" id="contactOpen" type="button" aria-haspopup="dialog" aria-controls="contactSheet">혼주에게 연락하기</button>
     </section>
 
     <section class="section calendar-section reveal" aria-labelledby="calendar-title">
@@ -126,11 +127,22 @@
     <section class="outro reveal" aria-labelledby="outro-title">
       <p class="outro__small">THANK YOU</p>
       <h2 id="outro-title">저희의 시작을 축복해 주셔서 감사합니다.</h2>
-      <p class="outro__message" id="outroMessage">전해주신 따뜻한 마음<br />오래도록 소중히 간직하겠습니다.<br />서로 아끼고 의지하며<br />행복하게 잘 살아가겠습니다.</p>
+      <p class="outro__message" id="outroMessage">전해주신 따뜻한 마음<br />오래도록 소중히 간직하겠습니다.<br /><br />작은 일에도 고마움을 표현하며<br />늘 아끼고 존중하는 부부로<br />행복하게 잘 살아가겠습니다.</p>
       <p class="outro__names"><span id="outroNames">우빈 · 경진</span> <span class="outro__signoff">올림</span></p>
       <a class="outro__top" href="#top">BACK TO TOP</a>
     </section>
   </main>
+
+  <dialog class="contact-sheet" id="contactSheet" aria-labelledby="contactTitle">
+    <header class="contact-sheet__header">
+      <h2 id="contactTitle">혼주에게 연락하기</h2>
+      <button class="contact-sheet__close" id="contactClose" type="button" aria-label="연락처 닫기" autofocus>×</button>
+    </header>
+    <div class="contact-sheet__body">
+      <div id="contactGroups"></div>
+      <p class="contact-sheet__notice" id="contactNotice" hidden>연락처를 준비 중입니다.</p>
+    </div>
+  </dialog>
 
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox__viewport">
