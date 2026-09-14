@@ -40,7 +40,6 @@
 
     $("#calendar-title").textContent = `${weddingDate.getMonth() + 1}월의 ${weddingDate.getDate()}번째 날.`;
     $("#calendarTimeText").textContent = `${weddingDate.getFullYear()}. ${String(weddingDate.getMonth() + 1).padStart(2, "0")}. ${String(weddingDate.getDate()).padStart(2, "0")} · ${weekdaysEn[weddingDate.getDay()].slice(0, 3)}`;
-    $("#dDayNames").textContent = `${groom.displayName} ${bride.displayName}`;
     $("#dDayDate").textContent = `${weddingDate.getFullYear()}.${String(weddingDate.getMonth() + 1).padStart(2, "0")}.${String(weddingDate.getDate()).padStart(2, "0")} ${weekdaysEn[weddingDate.getDay()].slice(0, 3)}`;
     $("#outroMessage").innerHTML = data.copy.outro;
     $("#outroNames").textContent = `${groom.displayName} · ${bride.displayName}`;

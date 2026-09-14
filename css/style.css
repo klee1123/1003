@@ -357,6 +357,36 @@ a { color: inherit; text-decoration: none; }
 .account-group__empty { margin: 0; padding: 28px 20px; font-size: 12px; color: var(--muted); text-align: center; }
 .accounts-status { margin: 16px 0 0; min-height: 40px; font-size: 11px; line-height: 1.8; color: var(--accent); }
 .account-copy-field { position: fixed; top: 0; left: -9999px; font-size: 16px; }
+.return-gift {
+  margin-top: 8px;
+  text-align: center;
+}
+.return-gift::before {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 1px;
+  margin: 0 auto 30px;
+  background: var(--line);
+}
+.return-gift__copy { margin-top: 0; }
+.return-gift__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 18px;
+  padding: 10px 2px;
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1.8;
+  text-decoration: underline;
+  text-decoration-color: rgba(127, 92, 77, .36);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+}
+.return-gift__link:hover, .return-gift__link:active { text-decoration-color: currentColor; }
+.return-gift__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 .outro {
   min-height: 76svh;
@@ -388,6 +418,12 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--serif-kr);
   font-size: 22px;
   letter-spacing: .16em;
+}
+.outro__signoff {
+  margin-left: 4px;
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: rgba(244,239,233,.72);
 }
 .outro__top {
   margin-top: 82px;
