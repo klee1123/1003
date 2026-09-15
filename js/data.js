@@ -50,6 +50,12 @@ window.WEDDING_DATA = {
       { label: "신부 어머니", bank: "", number: "", holder: "김전미" }
     ]
   },
+  // Google Apps Script 웹 앱의 /exec 주소를 입력하세요.
+  // 연결 전에는 작성 폼 대신 준비 중 안내를 표시합니다. 설정: apps-script/README.md
+  guestbook: {
+    enabled: true,
+    endpoint: "https://script.google.com/macros/s/AKfycbyidiaPzoB1r1PMerR3INj0hG28y6WQe6ggLS5yBOe3WO-_8Ivxu3feVybt0UBaoY9EcA/exec"
+  },
   images: {
     hero: "./assets/images/main.png",
     gallery: [

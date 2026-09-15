@@ -11,11 +11,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script>
-    if (new URLSearchParams(window.location.search).get("mode") === "simple") {
-      document.documentElement.classList.add("hide-gift");
+    if (new URLSearchParams(window.location.search).get("mode") === "show") {
+      document.documentElement.classList.add("show-gift");
     }
   </script>
-  <link rel="stylesheet" href="./css/style.css?v=20260914-outro-1" />
+  <link rel="stylesheet" href="./css/style.css?v=20260915-guestbook-compact-1" />
 </head>
 <body>
   <main class="invitation" id="top">
@@ -109,6 +109,66 @@
       <div class="gallery-grid" id="galleryGrid" aria-label="웨딩 사진 갤러리"></div>
     </section>
 
+    <section class="section guestbook-section reveal" id="guestbook" aria-labelledby="guestbook-title">
+      <p class="eyebrow">GUESTBOOK</p>
+      <h2 class="section-title" id="guestbook-title">축하의 말을 남겨주세요</h2>
+      <p class="guestbook-intro">보내주신 따뜻한 한마디,<br />오래도록 소중히 간직하겠습니다.</p>
+
+      <p class="guestbook-notice" id="guestbookNotice" role="status">방명록을 준비 중입니다.</p>
+      <form class="guestbook-form" id="guestbookForm" hidden>
+        <fieldset id="guestbookFields">
+          <legend class="guestbook-sr-only">축하 메시지 작성</legend>
+          <label for="guestbookName">이름</label>
+          <input id="guestbookName" name="name" type="text" placeholder="성함을 남겨주세요" maxlength="20" autocomplete="name" required />
+          <div class="guestbook-label-row">
+            <label for="guestbookMessage">축하 메시지</label>
+            <span class="guestbook-counter" id="guestbookCounter">0 / 300</span>
+          </div>
+          <textarea id="guestbookMessage" name="message" rows="4" placeholder="두 사람에게 전하고 싶은 마음" maxlength="300" aria-describedby="guestbookPrivacy guestbookCounter" required></textarea>
+          <label class="guestbook-password-label" for="guestbookPassword">수정·삭제 비밀번호</label>
+          <input id="guestbookPassword" name="password" type="password" placeholder="4~32자" minlength="4" maxlength="32" autocomplete="new-password" aria-describedby="guestbookPasswordHint" required />
+          <p class="guestbook-privacy" id="guestbookPasswordHint">글을 수정하거나 삭제할 때 필요해요.</p>
+          <div class="guestbook-trap" aria-hidden="true" inert>
+            <label for="guestbookWebsite">웹사이트</label>
+            <input id="guestbookWebsite" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <p class="guestbook-privacy" id="guestbookPrivacy">이름과 메시지는 청첩장을 방문한 분들께 공개됩니다.</p>
+          <button class="guestbook-submit" id="guestbookSubmit" type="submit">축하글 남기기</button>
+        </fieldset>
+      </form>
+      <p class="guestbook-status" id="guestbookStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+
+      <div class="guestbook-messages" id="guestbookMessages" hidden>
+        <div class="guestbook-list-head">
+          <h3>남겨주신 마음 <span id="guestbookCount"></span></h3>
+          <button class="guestbook-refresh" id="guestbookRefresh" type="button">새로고침</button>
+        </div>
+        <form class="guestbook-form guestbook-manage" id="guestbookManage" aria-labelledby="guestbookManageTitle" hidden>
+          <h3 id="guestbookManageTitle">축하글 수정</h3>
+          <p class="guestbook-manage-description" id="guestbookManageDescription"></p>
+          <fieldset id="guestbookManageFields">
+            <legend class="guestbook-sr-only">축하글 수정·삭제</legend>
+            <div id="guestbookEditFields">
+              <label for="guestbookEditName">이름</label>
+              <input id="guestbookEditName" name="name" type="text" maxlength="20" autocomplete="name" required />
+              <label class="guestbook-password-label" for="guestbookEditMessage">축하 메시지</label>
+              <textarea id="guestbookEditMessage" name="message" rows="3" maxlength="300" required></textarea>
+            </div>
+            <label class="guestbook-password-label" for="guestbookManagePassword">작성할 때 정한 비밀번호</label>
+            <input id="guestbookManagePassword" name="password" type="password" placeholder="4~32자" minlength="4" maxlength="32" autocomplete="current-password" required />
+            <div class="guestbook-manage-buttons">
+              <button class="guestbook-more" id="guestbookManageCancel" type="button">취소</button>
+              <button class="guestbook-submit" id="guestbookManageSubmit" type="submit">수정하기</button>
+            </div>
+          </fieldset>
+        </form>
+        <p class="guestbook-status" id="guestbookManageStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+        <ul class="guestbook-list" id="guestbookList" aria-label="축하 메시지"></ul>
+        <p class="guestbook-list-status" id="guestbookListStatus" role="status" aria-live="polite"></p>
+        <button class="guestbook-more" id="guestbookMore" type="button" hidden>축하글 더 보기</button>
+      </div>
+    </section>
+
     <section class="section accounts-section reveal" id="accounts" aria-labelledby="accounts-title">
       <p class="eyebrow">WITH GRATITUDE</p>
       <h2 class="section-title" id="accounts-title">마음 전하는 곳</h2>
@@ -163,7 +223,8 @@
     </div>
   </div>
 
-  <script src="./js/data.js?v=20260914-copy-5"></script>
-  <script src="./js/script.js?v=20260914-mode-2"></script>
+  <script src="./js/data.js?v=20260915-guestbook-1"></script>
+  <script src="./js/script.js?v=20260915-mode-show-3"></script>
+  <script src="./js/guestbook.js?v=20260915-guestbook-initial-load-1"></script>
 </body>
 </html>

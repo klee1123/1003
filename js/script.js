@@ -238,7 +238,7 @@
   };
 
   const renderAccounts = () => {
-    if (document.documentElement.classList.contains("hide-gift")) {
+    if (!document.documentElement.classList.contains("show-gift")) {
       $("#accounts").remove();
       return;
     }
