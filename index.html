@@ -15,7 +15,7 @@
       document.documentElement.classList.add("show-gift");
     }
   </script>
-  <link rel="stylesheet" href="./css/style.css?v=20260915-guestbook-compact-1" />
+  <link rel="stylesheet" href="./css/style.css?v=20260919-guestbook-compact-4" />
 </head>
 <body>
   <main class="invitation" id="top">
@@ -112,7 +112,7 @@
     <section class="section guestbook-section reveal" id="guestbook" aria-labelledby="guestbook-title">
       <p class="eyebrow">GUESTBOOK</p>
       <h2 class="section-title" id="guestbook-title">축하의 말을 남겨주세요</h2>
-      <p class="guestbook-intro">보내주신 따뜻한 한마디,<br />오래도록 소중히 간직하겠습니다.</p>
+      <p class="guestbook-intro">저희의 새로운 시작에<br />따뜻한 한마디를 더해 주세요.</p>
 
       <p class="guestbook-notice" id="guestbookNotice" role="status">방명록을 준비 중입니다.</p>
       <form class="guestbook-form" id="guestbookForm" hidden>
@@ -124,7 +124,7 @@
             <label for="guestbookMessage">축하 메시지</label>
             <span class="guestbook-counter" id="guestbookCounter">0 / 300</span>
           </div>
-          <textarea id="guestbookMessage" name="message" rows="4" placeholder="두 사람에게 전하고 싶은 마음" maxlength="300" aria-describedby="guestbookPrivacy guestbookCounter" required></textarea>
+          <textarea id="guestbookMessage" name="message" rows="3" placeholder="두 사람에게 전하고 싶은 마음" maxlength="300" aria-describedby="guestbookPrivacy guestbookCounter" required></textarea>
           <label class="guestbook-password-label" for="guestbookPassword">수정·삭제 비밀번호</label>
           <input id="guestbookPassword" name="password" type="password" placeholder="4~32자" minlength="4" maxlength="32" autocomplete="new-password" aria-describedby="guestbookPasswordHint" required />
           <p class="guestbook-privacy" id="guestbookPasswordHint">글을 수정하거나 삭제할 때 필요해요.</p>
@@ -191,7 +191,7 @@
     <section class="outro reveal" aria-labelledby="outro-title">
       <p class="outro__small">THANK YOU</p>
       <h2 id="outro-title">축하해 주셔서 감사합니다.</h2>
-      <p class="outro__message" id="outroMessage">전해주신 따뜻한 마음<br />오래도록 소중히 간직하겠습니다.<br /><br />작은 일에도 서로 고마움을 전하고<br />늘 아끼고 존중하며<br />행복하게 살아가겠습니다.</p>
+      <p class="outro__message" id="outroMessage">저희의 새로운 시작을<br />함께 기뻐해 주시고 축복해 주셔서 감사합니다.<br /><br />앞으로 함께할 날들 속에서<br />좋은 순간에는 기쁨을 나누고,<br />어려운 순간에는 서로의 가장 가까운 편이 되어<br />늘 아끼고 의지하며 잘 살아가겠습니다.<br /><br />저희 두 사람을 따뜻하게 바라봐 주신<br />그 소중한 마음을<br />오래도록 감사히 간직하겠습니다.</p>
       <p class="outro__names"><span id="outroNames">우빈 · 경진</span> <span class="outro__signoff">올림</span></p>
       <a class="outro__top" href="#top">BACK TO TOP</a>
     </section>
@@ -223,8 +223,8 @@
     </div>
   </div>
 
-  <script src="./js/data.js?v=20260915-guestbook-1"></script>
+  <script src="./js/data.js?v=20260919-outro-2"></script>
   <script src="./js/script.js?v=20260915-mode-show-3"></script>
-  <script src="./js/guestbook.js?v=20260915-guestbook-initial-load-1"></script>
+  <script src="./js/guestbook.js?v=20260919-status-timeout-1"></script>
 </body>
 </html>

@@ -27,6 +27,24 @@
   const editMessage = $("guestbookEditMessage");
   const managePassword = $("guestbookManagePassword");
   const manageStatus = $("guestbookManageStatus");
+  const successStatusDuration = 4000;
+  const statusTimers = new WeakMap();
+  const setStatus = (element, state, message, autoClear = false) => {
+    clearTimeout(statusTimers.get(element));
+    statusTimers.delete(element);
+    if (state) element.dataset.state = state;
+    else delete element.dataset.state;
+    element.textContent = message;
+    if (!autoClear || !message) return;
+    const timer = setTimeout(() => {
+      if (element.dataset.state === state && element.textContent === message) {
+        delete element.dataset.state;
+        element.textContent = "";
+      }
+      statusTimers.delete(element);
+    }, successStatusDuration);
+    statusTimers.set(element, timer);
+  };
   let endpoint;
   try {
     endpoint = new URL(config?.endpoint || "");
@@ -263,8 +281,7 @@
     fields.disabled = true;
     form.setAttribute("aria-busy", "true");
     submit.textContent = "마음을 전하고 있어요…";
-    status.dataset.state = "loading";
-    status.textContent = "축하글을 저장하고 있어요. 잠시만 기다려주세요.";
+    setStatus(status, "loading", "축하글을 저장하고 있어요. 잠시만 기다려주세요.");
 
     let attempted = false;
     try {
@@ -280,18 +297,18 @@
       pendingPassword = "";
       form.reset();
       updateCounter();
-      status.dataset.state = "success";
-      status.textContent = receipt.state === "pending"
+      const successMessage = receipt.state === "pending"
         ? "따뜻한 마음 감사합니다. 확인 후 방명록에 소개할게요."
         : receipt.state === "hidden" || receipt.state === "deleted"
           ? "이미 접수된 축하글입니다. 따뜻한 마음 감사합니다."
           : "축하글을 남겼어요. 따뜻한 마음 감사합니다.";
+      setStatus(status, "success", successMessage, true);
       refreshFromReceipt(receipt, needsRefresh);
     } catch (error) {
-      status.dataset.state = "error";
-      status.textContent = pending && attempted
+      const errorMessage = pending && attempted
         ? "등록 여부를 확인하지 못했어요. 입력한 내용은 그대로 두고 잠시 후 다시 눌러주세요."
         : error.message;
+      setStatus(status, "error", errorMessage);
     } finally {
       sending = false;
       fields.disabled = false;
@@ -321,7 +338,7 @@
     returnFocus = trigger;
     manageForm.dataset.action = action;
     manageForm.hidden = false;
-    manageStatus.textContent = "";
+    setStatus(manageStatus, "", "");
     $("guestbookManageTitle").textContent = action === "update" ? "축하글 수정" : "축하글 삭제";
     $("guestbookManageDescription").textContent = action === "update" ? `${entry.name}님의 축하글을 수정합니다.` : `${entry.name}님의 축하글을 삭제할까요? 삭제하면 목록에서 사라집니다.`;
     $("guestbookManageSubmit").textContent = action === "update" ? "수정하기" : "삭제하기";
@@ -334,7 +351,7 @@
   };
   $("guestbookManageCancel").addEventListener("click", () => {
     closeManager();
-    manageStatus.textContent = "";
+    setStatus(manageStatus, "", "");
   });
   [editName, editMessage, managePassword].forEach((field) => field.addEventListener("input", () => field.setCustomValidity("")));
   manageForm.addEventListener("submit", async (event) => {
@@ -353,8 +370,7 @@
     const name = editName.value.trim();
     const message = editMessage.value.replace(/\r\n?/g, "\n").trim();
     const password = managePassword.value;
-    manageStatus.dataset.state = "loading";
-    manageStatus.textContent = action === "update" ? "축하글을 수정하고 있어요." : "축하글을 삭제하고 있어요.";
+    setStatus(manageStatus, "loading", action === "update" ? "축하글을 수정하고 있어요." : "축하글을 삭제하고 있어요.");
     $("guestbookManageSubmit").textContent = action === "update" ? "수정 중…" : "삭제 중…";
     let attempted = false;
     try {
@@ -371,16 +387,16 @@
       if (receipt.entryId !== entry.id || receipt.action !== action || (action === "delete" && receipt.state !== "deleted")) throw new Error("변경 여부를 확인하지 못했어요.");
       managing = false;
       closeManager();
-      manageStatus.dataset.state = "success";
-      manageStatus.textContent = action === "delete" ? "축하글을 삭제했어요." : receipt.state === "pending" ? "수정한 축하글은 확인 후 다시 소개할게요." : "축하글을 수정했어요.";
+      const successMessage = action === "delete" ? "축하글을 삭제했어요." : receipt.state === "pending" ? "수정한 축하글은 확인 후 다시 소개할게요." : "축하글을 수정했어요.";
+      setStatus(manageStatus, "success", successMessage, true);
       // Remove stale content immediately; a failed refresh must not show deleted text.
       entries = entries.filter((item) => item.id !== entry.id);
       renderEntries();
       refresh.focus({ preventScroll: true });
       refreshFromReceipt(receipt, needsRefresh);
     } catch (error) {
-      manageStatus.dataset.state = "error";
-      manageStatus.textContent = pendingChange && attempted ? "변경 여부를 확인하지 못했어요. 입력한 내용은 그대로 두고 잠시 후 다시 눌러주세요." : error.message;
+      const errorMessage = pendingChange && attempted ? "변경 여부를 확인하지 못했어요. 입력한 내용은 그대로 두고 잠시 후 다시 눌러주세요." : error.message;
+      setStatus(manageStatus, "error", errorMessage);
     } finally {
       managing = false;
       manageFields.disabled = false;
