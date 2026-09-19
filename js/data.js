@@ -40,7 +40,7 @@ window.WEDDING_DATA = {
   // 계좌번호는 앞자리 0과 하이픈을 유지하도록 따옴표 안에 입력하세요.
   accounts: {
     groom: [
-      { label: "신랑", bank: "", number: "", holder: "이우빈" },
+      { label: "신랑", bank: "우리은행", number: "1002-550-380849", holder: "이우빈" },
       { label: "신랑 아버지", bank: "", number: "", holder: "이성주" },
       { label: "신랑 어머니", bank: "", number: "", holder: "고인숙" }
     ],

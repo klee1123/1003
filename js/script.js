@@ -102,7 +102,9 @@
   };
 
   let activeIndex = 0;
-  const gallery = data.images.gallery;
+  const gallery = document.documentElement.classList.contains("show-gift")
+    ? data.images.gallery.slice(0, 6)
+    : data.images.gallery;
 
   const galleryItem = (src, index) => `
     <button class="gallery-photo" type="button" data-gallery-index="${index}" aria-label="${index + 1}번째 사진 크게 보기">
